@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   LayoutDashboard, Users, UploadCloud, Trophy, MessageSquare, ClipboardCheck,
@@ -11,6 +11,7 @@ const menus = {
   TEAM: [
     ["Dashboard", "/app/team/dashboard", LayoutDashboard],
     ["Register Team", "/app/team/register-team", Users],
+    ["Join a Team", "/app/team/join-team", Users],
     ["Submit Project", "/app/team/submit-project", UploadCloud],
     ["View Results", "/app/team/results", Trophy]
   ],
@@ -43,6 +44,7 @@ export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
   const user = getCurrentUser();
   const navigate = useNavigate();
+  const location = useLocation();
   const menu = menus[user?.role] || [];
 
   function handleLogout() {
@@ -72,7 +74,7 @@ export default function DashboardLayout() {
         </div>
         <div className="menu">
           {menu.map(([label, path, Icon]) => (
-            <Link className="menu-item" key={path} to={path} onClick={() => setOpen(false)}>
+            <Link className={`menu-item ${location.pathname === path ? "active" : ""}`} key={path} to={path} onClick={() => setOpen(false)}>
               <Icon size={18} /> {label}
             </Link>
           ))}
@@ -83,8 +85,8 @@ export default function DashboardLayout() {
       <main className="main">
         <header className="topbar">
           <div>
-            <h2>Welcome, {user?.fullName}</h2>
-            <p>SEAL Hackathon Management System</p>
+            <p className="eyebrow">{user?.role?.replace("COORDINATOR", "EVENT COORDINATOR") || "DEMO USER"}</p>
+            <h2>Welcome back, {user?.fullName?.split(" ").at(-1)}</h2>
           </div>
         </header>
         <Outlet />

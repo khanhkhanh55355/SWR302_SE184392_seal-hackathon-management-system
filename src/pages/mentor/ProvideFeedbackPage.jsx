@@ -43,7 +43,7 @@ export default function ProvideFeedbackPage() {
           { key: "content", label: "Content" },
           { key: "createdAt", label: "Created At" }
         ]}
-        rows={data.feedback.map((f) => ({ ...f, team: teamName(data, f.teamId), mentor: userName(data, f.mentorId) }))}
+        rows={data.feedback.filter((f) => Number(f.mentorId) === Number(user.id)).map((f) => ({ ...f, team: teamName(data, f.teamId), mentor: userName(data, f.mentorId) }))}
       />
     </div>
   );

@@ -48,7 +48,7 @@ export default function ScoreSubmissionsPage() {
           { key: "scoreValue", label: "Score" },
           { key: "comment", label: "Comment" }
         ]}
-        rows={data.scores}
+        rows={data.scores.filter((score) => assignments.some((assignment) => Number(assignment.id) === Number(score.judgeAssignmentId)))}
       />
     </div>
   );

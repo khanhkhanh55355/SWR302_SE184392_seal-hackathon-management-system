@@ -11,6 +11,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 
 import TeamDashboard from "./pages/team/TeamDashboard";
 import RegisterTeamPage from "./pages/team/RegisterTeamPage";
+import JoinTeamPage from "./pages/team/JoinTeamPage";
 import SubmitProjectPage from "./pages/team/SubmitProjectPage";
 import TeamResultsPage from "./pages/team/TeamResultsPage";
 
@@ -54,6 +55,7 @@ export default function App() {
 
         <Route path="team/dashboard" element={<TeamDashboard />} />
         <Route path="team/register-team" element={<RegisterTeamPage />} />
+        <Route path="team/join-team" element={<JoinTeamPage />} />
         <Route path="team/submit-project" element={<SubmitProjectPage />} />
         <Route path="team/results" element={<TeamResultsPage />} />
 

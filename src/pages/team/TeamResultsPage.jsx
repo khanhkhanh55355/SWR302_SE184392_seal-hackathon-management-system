@@ -1,11 +1,13 @@
 import Table from "../../components/Table";
 import Badge from "../../components/Badge";
-import { loadData } from "../../utils/storage";
+import { getCurrentUser, loadData } from "../../utils/storage";
 import { calculateSubmissionScore, findById } from "../../utils/helpers";
 
 export default function TeamResultsPage() {
   const data = loadData();
-  const rows = data.teams.map((team) => {
+  const user = getCurrentUser();
+  const myTeamIds = data.teams.filter((team) => Number(team.leaderId) === Number(user.id) || data.teamMembers.some((member) => Number(member.userId) === Number(user.id) && Number(member.teamId) === Number(team.id))).map((team) => Number(team.id));
+  const rows = data.teams.filter((team) => myTeamIds.includes(Number(team.id))).map((team) => {
     const submission = data.submissions.find((s) => Number(s.teamId) === Number(team.id));
     return {
       id: team.id,
@@ -19,7 +21,8 @@ export default function TeamResultsPage() {
 
   return (
     <div className="page">
-      <h1>View Results</h1>
+      <h1>My Team Results</h1>
+      <p className="muted">Final scores are calculated from judges' submitted rubric scores. The public ranking remains available on the Leaderboard page.</p>
       <Table
         columns={[
           { key: "rank", label: "Rank" },
